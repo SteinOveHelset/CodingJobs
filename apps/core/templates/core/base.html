@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Title -->
+        <title>Coding Jobs</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar is-light">
+            <div class="navbar-brand">
+                <a href="{% url 'frontpage' %}" class="navbar-item"><strong>CodingJobs</strong></a>
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a href="{% url 'signup' %}" class="button is-success"><strong>Sign up</strong></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+
+        <!-- Main content -->
+        <section class="section">
+            {% block content %}
+            {% endblock %}
+        </section>
+        <!-- End Main content -->
+    </body>
+</html>
