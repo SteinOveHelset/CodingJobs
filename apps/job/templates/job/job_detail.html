@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h1 class="title">{{ job.title }}</h1>
+
+    <p class="is-size-4">{{ job.short_description }}</p>
+
+    <p>{{ job.long_description }}</p>
+{% endblock %}
