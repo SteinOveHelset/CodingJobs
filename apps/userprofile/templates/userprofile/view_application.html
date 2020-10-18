@@ -8,5 +8,37 @@
     <small>Date added: {{ application.created_at }}</small>
 
     <p><strong>Content: </strong><br>{{ application.content }}</p>
-    <p><strong>Experince: </strong><br>{{ application.experience }}</p>
+    <p><strong>Experience: </strong><br>{{ application.experience }}</p>
+
+    <hr>
+
+    <h2 class="subtitle">Conversation</h2>
+
+    {% for message in application.conversationmessages.all %}
+        <div class="notification">
+            <b>{{ message.created_by.username }} - {{ message.created_at|timesince }} ago</b><br>
+
+            {{ message.content }}
+        </div>
+    {% empty %}
+        <p>No messages yet...</p>
+
+        <hr>
+    {% endfor %}
+    
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        <div class="field">
+            <div class="control">
+                <textarea class="textarea" placeholder="Your message" name="content" id="id_content"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-success">Send</button>
+            </div>
+        </div>
+    </form>
 {% endblock %}
