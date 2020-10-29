@@ -26,5 +26,6 @@ urlpatterns = [
     path('login/', views.LoginView.as_view(template_name='core/login.html'), name='login'),
     path('admin/', admin.site.urls),
     path('dashboard/', include('apps.userprofile.urls')),
+    path('notifications/', include('apps.notification.urls')),
     path('jobs/', include('apps.job.urls')),
 ]
