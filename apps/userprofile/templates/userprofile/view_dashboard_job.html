@@ -3,6 +3,17 @@
 {% block content %}
     <h1 class="title">View job - {{ job.title }}</h1>
 
+    <p class="is-size-4">{{ job.short_description }}</p>
+
+    <p>{{ job.long_description }}</p>
+
+    <b>Company name: </b>{{ job.company_name}}<br>
+    <b>Company address: </b>{{ job.company_address}}<br>
+    <b>Company zipcode: </b>{{ job.company_zipcode}}<br>
+    <b>Company place: </b>{{ job.company_place}}<br>
+    <b>Company country: </b>{{ job.company_country}}<br>
+    <b>Company size: </b>{{ job.get_company_size_display }}<br>
+
     {% for application in job.applications.all %}
         <a href="{% url 'view_application' application.id %}">{{ application.created_by.username }}</a>
     {% endfor %}
