@@ -6,6 +6,9 @@ from .models import Job
 
 from apps.notification.utilities import create_notification
 
+def search(request):
+    return render(request, 'job/search.html')
+
 def job_detail(request, job_id):
     job = Job.objects.get(pk=job_id)
 
