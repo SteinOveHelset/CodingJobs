@@ -1,0 +1,173 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div id="edit-job-app">
+        <h1 class="title">Edit job</h1>
+
+        <form v-on:submit="validateForm" method="post" action=".">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                {% for error in form.errors %}
+                    <div class="notification is-danger">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="notification is-danger" v-if="errors.length">
+                <p v-for="error in errors">
+                    [[ error ]]
+                </p>
+            </div>
+
+            <div class="field">
+                <label>Title</label>
+
+                <div class="control">
+                    <input class="input" type="text" name="title" id="id_title" v-model="title">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Short description</label>
+
+                <div class="control">
+                    <textarea class="textarea" name="short_description" id="id_short_description" v-model="short_description"></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Long description</label>
+
+                <div class="control">
+                    <textarea class="textarea" name="long_description" id="id_long_description">{% if job.long_description %}{{ job.long_description }}{% endif %}</textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Company name</label>
+
+                <div class="control">
+                    <input class="input" type="text" name="company_name" id="id_company_name" v-model="company_name">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Company address</label>
+
+                <div class="control">
+                    <input class="input" type="text" name="company_address" id="id_company_address" value="{% if job.company_address %}{{ job.company_address }}{% endif %}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Company zipcode</label>
+
+                <div class="control">
+                    <input class="input" type="text" name="company_zipcode" id="id_company_zipcode" value="{% if job.company_zipcode %}{{ job.company_zipcode }}{% endif %}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Company place</label>
+
+                <div class="control">
+                    <input class="input" type="text" name="company_place" id="id_company_place" value="{% if job.company_place %}{{ job.company_place }}{% endif %}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Company country</label>
+
+                <div class="control">
+                    <input class="input" type="text" name="company_country" id="id_company_country" value="{% if job.company_country %}{{ job.company_country }}{% endif %}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Company size</label>
+
+                <div class="control">
+                    <div class="select">
+                        <select name="company_size" v-model="company_size">
+                            <option value="">Choose size</option>
+                            <option value="size_1-9">1-9</option>
+                            <option value="size_10-49">10-49</option>
+                            <option value="size_50-99">50-99</option>
+                            <option value="size_100">100+</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Status</label>
+
+                <div class="control">
+                    <div class="select">
+                        <select name="status">
+                            <option value="active"{% if job.status == 'active' %} selected{% endif %}>Active</option>
+                            <option value="employed"{% if job.status == 'employed' %} selected{% endif %}>Employed</option>
+                            <option value="archived"{% if job.status == 'archived' %} selected{% endif %}>Archived</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-success" type="submit">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const EditJobApp = {
+        data() {
+            return {
+                title: '{{ job.title }}',
+                company_name: '{{ job.company_name }}',
+                short_description: '{{ job.short_description }}',
+                company_size: '{{ job.company_size }}',
+                errors: []
+            }
+        },
+        delimiters: ['[[', ']]'],
+        methods: {
+            validateForm(e) {
+                this.errors = []
+
+                if (this.title === '') {
+                    this.errors.push('The title field is missing!')
+                }
+
+                if (this.short_description === '') {
+                    this.errors.push('The short description field is missing!')
+                }
+
+                if (this.company_name === '') {
+                    this.errors.push('The company name field is missing!')
+                }
+
+                if (this.company_size === '') {
+                    this.errors.push('The company size is missing!')
+                }
+
+                if (this.errors.length) {
+                    e.preventDefault()
+
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+    }
+
+    Vue.createApp(EditJobApp).mount('#edit-job-app');
+</script>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import AddJobForm, ApplicationForm
 from .models import Job
@@ -50,3 +50,21 @@ def add_job(request):
         form = AddJobForm()
     
     return render(request, 'job/add_job.html', {'form': form})
+
+@login_required
+def edit_job(request, job_id):
+    job = get_object_or_404(Job, pk=job_id, created_by=request.user)
+
+    if request.method == 'POST':
+        form = AddJobForm(request.POST, instance=job)
+
+        if form.is_valid():
+            job = form.save(commit=False)
+            job.status = request.POST.get('status')
+            job.save()
+
+            return redirect('dashboard')
+    else:
+        form = AddJobForm(instance=job)
+    
+    return render(request, 'job/edit_job.html', {'form': form, 'job': job})

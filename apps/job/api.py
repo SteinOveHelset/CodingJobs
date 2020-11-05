@@ -11,7 +11,7 @@ def api_search(request):
     query = data['query']
     company_size = data['company_size']
 
-    jobs = Job.objects.filter(Q(title__icontains=query) | Q(short_description__icontains=query) | Q(long_description__icontains=query) | Q(company_name__icontains=query) | Q(company_place__icontains=query))
+    jobs = Job.objects.filter(status=Job.ACTIVE).filter(Q(title__icontains=query) | Q(short_description__icontains=query) | Q(long_description__icontains=query) | Q(company_name__icontains=query) | Q(company_place__icontains=query))
 
     if company_size:
         jobs = jobs.filter(company_size=company_size)

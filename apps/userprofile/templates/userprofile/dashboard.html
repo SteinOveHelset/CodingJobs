@@ -10,7 +10,7 @@
 
         {% for job in request.user.jobs.all %}
             <div class="job">
-                <a href="{% url 'view_dashboard_job' job.id %}">{{ job.title }}</a>
+                <a href="{% url 'view_dashboard_job' job.id %}">{{ job.title }} ({{ job.get_status_display }})</a>
             </div>
         {% empty %}
             <p>You don't have any jobs yet...</p>
